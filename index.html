@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tặng mập yêu cụa anh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe6f5 30%, #f0e6ff 70%, #e6f3ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* === CONTAINER & LAYOUT === */
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .main-button {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+            border: none;
+            padding: 20px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .main-button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+        }
+
+        .main-button:active {
+            transform: scale(0.95);
+        }
+
+        /* === MODAL CARD === */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .card {
+            background: linear-gradient(135deg, #fff5f8 0%, #fff0f7 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 3px solid #ffc0e0;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: white;
+            transform: rotate(90deg);
+        }
+
+        /* === CONTENT === */
+        .card-title {
+            font-size: 28px;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            font-weight: bold;
+            animation: floatTitle 2s ease-in-out infinite;
+        }
+
+        @keyframes floatTitle {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .message-box {
+            min-height: 150px;
+            margin: 25px 0;
+        }
+
+        .message-line {
+            font-size: 16px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin: 10px 0;
+            opacity: 0;
+            animation: typeAndFade 0.5s ease forwards;
+            text-shadow: 1px 1px 2px rgba(255, 107, 157, 0.1);
+        }
+
+        .message-line:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .message-line:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .message-line:nth-child(3) {
+            animation-delay: 1.4s;
+        }
+
+        .message-line:nth-child(4) {
+            animation-delay: 2s;
+        }
+
+        .message-line:nth-child(5) {
+            animation-delay: 2.6s;
+        }
+
+        .message-line:nth-child(6) {
+            animation-delay: 3.2s;
+        }
+
+        @keyframes typeAndFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji-heart {
+            display: inline-block;
+            animation: heartBeat 1.2s infinite;
+            margin: 0 5px;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* === FLOATING EFFECTS === */
+        .floating-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .floating-item {
+            position: absolute;
+            font-size: 25px;
+            opacity: 0;
+        }
+
+        .float-up {
+            animation: floatUp 4s ease-in forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg) scale(0);
+            }
+        }
+
+        .sparkle {
+            animation: sparkleEffect 2s ease-out forwards;
+        }
+
+        @keyframes sparkleEffect {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        .confetti {
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+                border-radius: 15px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            .message-line {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .main-button {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .card {
+                padding: 25px 15px;
+            }
+
+            .card-title {
+                font-size: 22px;
+            }
+
+            .message-line {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Nơi hiệu ứng bay lơ lửng -->
+    <div class="floating-container" id="floatingContainer"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <button class="main-button" id="mainBtn">💖 Em yêu bất ngờ hông, bấm vào đây nhớ! 💖</button>
+    </div>
+
+    <!-- Modal Card -->
+    <div class="modal" id="modal">
+        <div class="card">
+            <button class="close-btn" id="closeBtn">✕</button>
+
+            <div class="card-title">
+                <span class="emoji-heart">💕</span> 20/10 - Trân trọng và cảm ơn những người phụ nữ trong cuộc sống
+                của anh trong đó có em ạ<span class="emoji-heart">💕</span>
+            </div>
+
+            <div class="message-box">
+                <div class="message-line">Gửi bé nhà mình,</div>
+                <div class="message-line">Nhân ngày 20/10 anh chúc em yêu nè💖
+                </div>
+                <div class="message-line">thật vui vẻ và rạng rỡ như mặt trời sáng sớm mai thức dậy</div>
+                <div class="message-line">Lúc nào cũng xinh rồi nhưng vẫn cần chăm sóc bản thân để xinh xắn hơn nữaa,
+                    yêu đời yêu anh ăn thật ngon và ngủ thật say<span class="emoji-heart">💕</span></div>
+                <div class="message-line">bức thư anh chuẩn bị từ từ 19/10 mong nó làm em vui như cách anh đang làm em
+                    cười mỗi ngày, còn bất ngờ
+                    thì hôm đi chơi nhớ, bất ngờ trước khi đi ngủ để có 1 giấc ngủ ngonnn </div>
+                <div class="message-line">Happy 20/10 em yêu của anh ạ hihi yêuuuuu! <span class="emoji-heart">💕</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mainBtn = document.getElementById('mainBtn');
+        const modal = document.getElementById('modal');
+        const closeBtn = document.getElementById('closeBtn');
+        const floatingContainer = document.getElementById('floatingContainer');
+
+        // === MAIN BUTTON CLICK ===
+        mainBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            createEffects();
+        });
+
+        // === CLOSE MODAL ===
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // === TẠO HIỆU ỨNG ĐẶC BIỆT ===
+        function createEffects() {
+            // Tạo trái tim bay
+            createFloatingHearts();
+            // Tạo hoa rơi
+            createFallingFlowers();
+            // Tạo sparkle
+            createSparkles();
+            // Tạo confetti
+            createConfetti();
+        }
+
+        function createFloatingHearts() {
+            const hearts = ['💖', '💕', '💗', '💝'];
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const heart = createFloatingElement(hearts[Math.floor(Math.random() * hearts.length)]);
+                    heart.classList.add('float-up');
+                    floatingContainer.appendChild(heart);
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 150);
+            }
+        }
+
+        function createFallingFlowers() {
+            const flowers = ['🌹', '🌸', '🌺', '🌻', '🌷'];
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const flower = createFloatingElement(flowers[Math.floor(Math.random() * flowers.length)]);
+                    flower.style.fontSize = '30px';
+                    flower.classList.add('float-up');
+                    floatingContainer.appendChild(flower);
+                    setTimeout(() => flower.remove(), 4000);
+                }, i * 200);
+            }
+        }
+
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = createFloatingElement('✨');
+                    sparkle.classList.add('sparkle');
+                    floatingContainer.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        function createConfetti() {
+            const confettiIcons = ['🎉', '🎊', '🎈', '⭐'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const conf = createFloatingElement(confettiIcons[Math.floor(Math.random() * confettiIcons.length)]);
+                    conf.classList.add('confetti');
+                    floatingContainer.appendChild(conf);
+                    setTimeout(() => conf.remove(), 3000);
+                }, i * 120);
+            }
+        }
+
+        // === HỖ TRỢ TẠO ELEMENT ===
+        function createFloatingElement(emoji) {
+            const el = document.createElement('div');
+            el.className = 'floating-item';
+            el.textContent = emoji;
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = Math.random() * 100 + '%';
+            return el;
+        }
+    </script>
+</body>
+
+</html>
